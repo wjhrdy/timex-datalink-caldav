@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/timex/data/link/caldav/version"
+require_relative "lib/TimexDatalinkCaldav/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "timex-data-link-caldav"
-  spec.version = Timex::Data::Link::Caldav::VERSION
+  spec.name = "TimexDatalinkCaldav"
+  spec.version = TimexDatalinkCaldav::VERSION
   spec.authors = ["Willy Hardy"]
   spec.email = ["whardy@redhat.com"]
 
