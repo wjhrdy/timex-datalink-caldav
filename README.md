@@ -51,6 +51,6 @@ Ensure you have the necessary dependencies installed on your system and you have
 
 The tool currently works with events that have attendees and converts event times to Eastern Standard Time (EST). Events are sorted by time before syncing to the watch.
 
----
+## Resources
 
-Again, feel free to modify this README to better suit your gem. If there are additional installation steps or prerequisites, you should add those. If you have a code of conduct, contributing guidelines, or a license, you should add links to those as well.
+If you want to use this I highly recommend pairing it with the Raspberry Pi Pico and [this project](https://github.com/famiclone6502/DIY_Datalink_Adapter).
