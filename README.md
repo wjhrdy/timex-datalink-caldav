@@ -1,43 +1,56 @@
-# timex_datalink_caldav
+# TimexDatalinkCaldav
 
-This gem provides a way to sync your CalDAV calendar events to your Timex Datalink watch. It fetches the next 15 non-all-day events from a specified CalDAV server and writes them to the watch as appointments.
+TimexDatalinkCaldav is a simple Ruby gem designed to sync events from a CalDAV server to a Timex Datalink watch. It can also be used as a standalone command-line interface (CLI) tool.
 
 ## Installation
 
-Replace `timex_datalink_caldav` with the name of your gem when it is released to RubyGems.org. 
+To install the TimexDatalinkCaldav gem, simply run:
 
-Install the gem and add it to your application's Gemfile by executing:
+```sh
+gem install timex_datalink_caldav
+```
 
-    $ bundle add timex_datalink_caldav
+Or add this line to your application's Gemfile:
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+```ruby
+gem 'timex_datalink_caldav'
+```
 
-    $ gem install timex_datalink_caldav
+And then execute:
+
+```sh
+bundle install
+```
 
 ## Usage
 
-First, initialize a `timex_datalink_caldav::Client` with your CalDAV server URL, username, password, and serial device path:
+### As a Gem
+
+Here's an example of how to use the tool in your Ruby code:
 
 ```ruby
-client = timex_datalink_caldav::Client.new('user', 'password', 'http://yourserver.com:8008/calendars/users/user1/calendar/', '/dev/ttyACM0')
+require 'timex_datalink_caldav'
+
+client = TimexDatalinkCaldav::Client.new(your_username, your_password, your_server_uri, your_device)
+client.sync_to_watch
 ```
 
-Then, call `write_to_watch` to fetch the events and write them to the watch:
+### As a CLI Tool
 
-```ruby
-client.write_to_watch
+After installing the gem, you can use it as a CLI tool:
+
+```sh
+timex_datalink_caldav -u https://caldavendpoint.com -n your_username -p your_password -d your_device
 ```
 
-## Development
+Please replace `your_username`, `your_password`, and `your_device` with your actual CalDAV server username, password, and device respectively. In this example, we're using Apple's iCloud CalDAV server. You'll need to replace this with the URI of your own CalDAV server if you're not using iCloud.
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+## Note
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Ensure you have the necessary dependencies installed on your system and you have the correct permissions to access the specified device. 
 
-## Contributing
+The tool currently works with events that have attendees and converts event times to Eastern Standard Time (EST). Events are sorted by time before syncing to the watch.
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/timex_datalink_caldav. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/timex_datalink_caldav/blob/master/CODE_OF_CONDUCT.md).
+---
 
-## Code of Conduct
-
-Everyone interacting in the timex_datalink_caldav project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/timex_datalink_caldav/blob/master/CODE_OF_CONDUCT.md).
+Again, feel free to modify this README to better suit your gem. If there are additional installation steps or prerequisites, you should add those. If you have a code of conduct, contributing guidelines, or a license, you should add links to those as well.

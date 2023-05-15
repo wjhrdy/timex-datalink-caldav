@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require_relative '../lib/timex_datalink_caldav'
+
+TimexDatalinkCaldav::CLI.new(ARGV).execute

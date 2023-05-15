@@ -1,4 +1,4 @@
-module timex_datalink_caldav
+module TimexDatalinkCaldav
   VERSION: String
   # See the writing guide of rbs: https://github.com/ruby/rbs#guides
 end
