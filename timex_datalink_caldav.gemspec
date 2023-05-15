@@ -8,11 +8,13 @@ Gem::Specification.new do |spec|
   spec.authors = ["Willy Hardy"]
   spec.email = ["zpga8gbp@mailer.me"]
 
-  spec.summary = "Uses the Timex Datalink watch to sync with a CalDAV server."
-  spec.description = "Uses the Timex Datalink watch to sync with a CalDAV server."
+  spec.summary = "Allows the Timex Datalink watch to sync with a CalDAV server."
+  spec.description = "Adds a CLI and a feature to pull your next day of calendar events into the Timex Datalink watch. Note: Hardcoded protocol1 and EST timezone. At the moment."
   spec.homepage = "https://github.com/wjhrdy/timex-datalink-caldav"
   spec.required_ruby_version = ">= 2.6.0"
-
+  
+  spec.license = "MIT"
+  spec.metadata["github_repo"] = "ssh://github.com/wjhrdy/timex-datalink-caldav"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/wjhrdy/timex-datalink-caldav"
   spec.metadata["changelog_uri"] = "https://github.com/wjhrdy/timex-datalink-caldav/CHANGELOG.md"

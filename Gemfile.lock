@@ -15,7 +15,6 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
-    ast (2.4.2)
     calendav (0.4.0)
       http
       icalendar
@@ -45,7 +44,6 @@ GEM
       icalendar (~> 2.0)
       ice_cube (~> 0.16)
     ice_cube (0.16.4)
-    json (2.6.3)
     llhttp-ffi (0.4.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -53,16 +51,9 @@ GEM
     minitest (5.18.0)
     nokogiri (1.14.4-arm64-darwin)
       racc (~> 1.4)
-    parallel (1.23.0)
-    parser (3.2.2.1)
-      ast (~> 2.4.1)
     public_suffix (5.0.1)
     racc (1.6.2)
-    rainbow (3.1.1)
     rake (13.0.6)
-    regexp_parser (2.8.0)
-    rexml (3.2.5)
-    ri_cal (0.8.8)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
@@ -76,19 +67,6 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.0)
-    rubocop (1.50.2)
-      json (~> 2.3)
-      parallel (~> 1.10)
-      parser (>= 3.2.0.0)
-      rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
-      rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.28.0, < 2.0)
-      ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.28.1)
-      parser (>= 3.2.1.0)
-    ruby-progressbar (1.13.0)
     rubyserial (0.6.0)
       ffi (~> 1.9, >= 1.9.3)
     timex_datalink_client (0.11.0)
@@ -101,7 +79,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    unicode-display_width (2.4.2)
 
 PLATFORMS
   arm64-darwin-22
@@ -112,9 +89,7 @@ DEPENDENCIES
   icalendar (~> 2.8)
   icalendar-recurrence (~> 1.1)
   rake (~> 13.0)
-  ri_cal (~> 0.8.8)
   rspec (~> 3.12)
-  rubocop (~> 1.21)
   timex_datalink_caldav!
   timex_datalink_client (~> 0.11.0)
 

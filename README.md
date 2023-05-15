@@ -13,7 +13,9 @@ gem install timex_datalink_caldav
 Or add this line to your application's Gemfile:
 
 ```ruby
-gem 'timex_datalink_caldav'
+source "https://rubygems.pkg.github.com/wjhrdy" do
+  gem "timex_datalink_caldav"
+end
 ```
 
 And then execute:
