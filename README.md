@@ -55,4 +55,4 @@ If you want to use this I highly recommend pairing it with the Raspberry Pi Pico
 
 Ensure you have the necessary dependencies installed on your system and you have the correct permissions to access the specified device.
 
-The tool currently filters down to events that have attendees and converts event times to Eastern Standard Time (EST). Events are sorted by time before syncing to the watch.
+The tool currently filters down to events that have attendees and converts event times to your computer's timezone. Events are sorted by time before syncing to the watch.
