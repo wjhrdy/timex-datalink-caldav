@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    timex_datalink_caldav (0.1.0)
+    timex_datalink_caldav (0.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -92,6 +92,7 @@ DEPENDENCIES
   rspec (~> 3.12)
   timex_datalink_caldav!
   timex_datalink_client (~> 0.11.0)
+  tzinfo (~> 2.0)
 
 BUNDLED WITH
    2.4.10

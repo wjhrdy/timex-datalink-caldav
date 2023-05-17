@@ -2,14 +2,27 @@ require 'calendav'
 require 'icalendar/recurrence'
 require 'timex_datalink_client'
 require 'active_support/time'
+require 'tzinfo'
 
 module TimexDatalinkCaldav
   class Client
-    def initialize(user, password, server_url, serial_device)
+    def initialize(user, password, server_url, serial_device, protocol_version)
       @user = user
       @password = password
       @server_url = server_url
       @serial_device = serial_device
+      @protocol_version = protocol_version.to_i
+      @protocol_class = case @protocol_version
+                        when 1 then TimexDatalinkClient::Protocol1
+                        when 3 then TimexDatalinkClient::Protocol3
+                        when 4 then TimexDatalinkClient::Protocol4
+                        else
+                          raise ArgumentError, "Invalid protocol version: #{@protocol_version}"
+                        end
+                      end
+
+    def get_localzone
+      TZInfo::Timezone.get(TZInfo::Timezone.all_country_zones.detect {|z| z.period_for_local(Time.now).utc_total_offset == Time.now.utc_offset}.identifier)
     end
 
     def get_events
@@ -40,11 +53,12 @@ module TimexDatalinkCaldav
           if ical_event.attendee&.any? # Exclude events without attendees
             next_occurrence = ical_event.occurrences_between(Time.now, Time.now + 24*60*60).first
             if next_occurrence
-              est_time = next_occurrence.start_time.in_time_zone('Eastern Time (US & Canada)')
+              puts get_localzone
+              est_time = next_occurrence.start_time.in_time_zone(get_localzone)
               key = "#{est_time}_#{ical_event.summary.to_s}"
               unless appointment_map[key] # Check if the event is already in the map
                 puts "Adding appointment: #{ical_event.summary.to_s} at time #{est_time}"
-                appointment = TimexDatalinkClient::Protocol1::Eeprom::Appointment.new(
+                appointment = @protocol_class::Eeprom::Appointment.new(
                   time: est_time,
                   message: ical_event.summary.to_s
                 )
@@ -62,26 +76,62 @@ module TimexDatalinkCaldav
     end
 
     def write_to_watch(appointments)
-      time1 = Time.now
-
-      models = [
-        TimexDatalinkClient::Protocol1::Sync.new,
-        TimexDatalinkClient::Protocol1::Start.new,
-        TimexDatalinkClient::Protocol1::Time.new(
+      # add 3 because it always seems to be about 3 seconds behind.
+      time1 = Time.now + 3
+      time2 = time1.dup.utc
+      
+      if @protocol_version == 1
+        time_model = @protocol_class::Time.new(
           zone: 1,
           time: time1,
           is_24h: false
-        ),
-        TimexDatalinkClient::Protocol1::TimeName.new(
+        )
+        time_name_model = @protocol_class::TimeName.new(
           zone: 1,
           name: time1.zone
-        ),
-        TimexDatalinkClient::Protocol1::Eeprom.new(
+        )
+        utc_time_model = @protocol_class::Time.new(
+          zone: 2,
+          time: time2,
+          is_24h: true
+        )
+        utc_time_name_model = @protocol_class::TimeName.new(
+          zone: 2,
+          name: time2.zone
+        )
+      else
+        time_model = @protocol_class::Time.new(
+          zone: 1,
+          name: time1.zone,
+          time: time1,
+          is_24h: false,
+          date_format: "%_m-%d-%y"
+        )
+        utc_time_model = @protocol_class::Time.new(
+          zone: 2,
+          name: "UTC",
+          time: time2,
+          is_24h: true,
+          date_format: "%y-%m-%d"
+        )
+        time_name_model = nil # Not needed for protocol version 3 and 4
+        utc_time_name_model = nil # Not needed for protocol version 3 and 4
+
+      end
+
+      models = [
+        @protocol_class::Sync.new,
+        @protocol_class::Start.new,
+        time_model,
+        time_name_model,
+        utc_time_model,
+        utc_time_name_model,
+        @protocol_class::Eeprom.new(
           appointments: appointments,
           appointment_notification_minutes: 5
         ),
-        TimexDatalinkClient::Protocol1::End.new
-      ]
+        @protocol_class::End.new
+      ].compact # Remove any nil entries
 
       timex_datalink_client = TimexDatalinkClient.new(
         serial_device: @serial_device,

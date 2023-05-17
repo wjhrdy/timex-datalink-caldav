@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'optparse'
-
 require_relative "timex_datalink_caldav/client"
 
 module TimexDatalinkCaldav
@@ -10,7 +9,7 @@ module TimexDatalinkCaldav
     end
 
     def execute
-      client = TimexDatalinkCaldav::Client.new(@options.fetch(:user), @options.fetch(:password), @options.fetch(:uri), @options.fetch(:device))
+      client = TimexDatalinkCaldav::Client.new(@options.fetch(:user), @options.fetch(:password), @options.fetch(:uri), @options.fetch(:device), @options.fetch(:api,1))
       client.sync_to_watch
     end
 
@@ -35,6 +34,10 @@ module TimexDatalinkCaldav
 
         opts.on("-d", "--device DEVICE", "Serial device for Timex Datalink watch") do |v|
           options[:device] = v
+        end
+
+        opts.on("-a", "--api PROTOCOL_VERSION", "Protocol Version") do |v|
+          options[:api] = v
         end
       end.parse!(arguments)
       options

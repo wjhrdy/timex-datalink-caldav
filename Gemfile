@@ -18,3 +18,5 @@ gem "icalendar", "~> 2.8"
 gem "icalendar-recurrence", "~> 1.1"
 
 gem "activesupport", "~> 7.0"
+
+gem "tzinfo", "~> 2.0"
