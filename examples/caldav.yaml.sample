@@ -1,0 +1,8 @@
+endpoints:
+  - uri: https://example.com/caldav1
+    user: user1
+    password: password1
+  - uri: https://example.com/caldav2
+    user: user2
+    password: password2
+  - uri: https://example.com/example.ical

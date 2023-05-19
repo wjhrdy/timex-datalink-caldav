@@ -20,3 +20,7 @@ gem "icalendar-recurrence", "~> 1.1"
 gem "activesupport", "~> 7.0"
 
 gem "tzinfo", "~> 2.0"
+
+gem "yaml", "~> 0.2.1"
+
+gem "open-uri", "~> 0.3.0"
