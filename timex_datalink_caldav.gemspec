@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
   spec.executables << 'timex_datalink_caldav'
-
+  spec.executables << 'get_ebrain_db'
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
 

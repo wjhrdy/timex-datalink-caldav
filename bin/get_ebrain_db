@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+
+require 'down'
+require 'fileutils'
+require 'tmpdir'
+require 'ruby-progressbar'
+
+# Define URL and file names
+url = "https://archive.org/download/ebrain-1.1.6/ebrain-1.1.6.iso"
+iso_file = File.join(Dir.tmpdir, "ebrain-1.1.6.iso")
+msi_file = File.join(Dir.tmpdir, "eBrain.MSI")
+cab_file = File.join(Dir.tmpdir, "Cabs.w4.cab")
+mdb_file1 = File.join(Dir.tmpdir, "pcvocab.mdb1")
+mdb_file = "pcvocab.mdb" # This is in the current directory
+
+# Check if 7zip is installed
+unless system('which 7z > /dev/null 2>&1')
+  puts "7zip is not installed. Please download and install 7zip from https://www.7-zip.org/download.html"
+  exit 1
+end
+
+# Initialize the progress bar
+progressbar = nil
+
+# Download the ISO file
+puts "Downloading ISO file..."
+Down.download(url,
+  destination: iso_file,
+  content_length_proc: ->(content_length) {
+    progressbar = ProgressBar.create(
+      title: 'Download Progress',
+      total: content_length,
+      format: '%a %bᗧ%i %p%% %t, Estimated time: %e'
+    )
+  },
+  progress_proc: ->(progress) {
+    progressbar.progress = progress
+  }
+)
+
+# Extract the MSI file from the ISO
+puts "Extracting MSI file..."
+system("7z e #{iso_file} -o#{File.dirname(msi_file)} #{File.basename(msi_file)}")
+
+# Extract the CAB file from the MSI
+puts "Extracting CAB file..."
+system("7z e #{msi_file} -o#{File.dirname(cab_file)} #{File.basename(cab_file)}")
+
+# Extract the MDB file from the CAB
+puts "Extracting MDB file..."
+system("7z e #{cab_file} -o#{File.dirname(mdb_file1)} #{File.basename(mdb_file1)}")
+
+# Rename and move the MDB file to the current directory
+puts "Renaming and moving MDB file..."
+FileUtils.mv mdb_file1, mdb_file
+
+puts "Done."

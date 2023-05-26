@@ -23,4 +23,10 @@ gem "tzinfo", "~> 2.0"
 
 gem "yaml", "~> 0.2.1"
 
-gem "open-uri", "~> 0.3.0"
+gem "text", "~> 1.3"
+
+gem "humanize", "~> 2.5"
+
+gem "down", "~> 5.4"
+
+gem "ruby-progressbar", "~> 1.13"
