@@ -79,3 +79,7 @@ If you want to use this, I highly recommend pairing it with the Raspberry Pi Pic
 - This gem is not affiliated with Timex, nor is it affiliated with any CalDAV server. It is simply a tool that I wrote to sync my events from my CalDAV server to my Timex Datalink watch.
 
 - This gem uses the anniversary feature for full day events, and the appointments feature for events with a start and end time.
+
+## Thanks
+
+- This project would not exist without the hard work of the people who reverse engineered the Timex Datalink protocol. I would like to thank them for their hard work. Mainly this gem https://github.com/synthead/timex_datalink_client
