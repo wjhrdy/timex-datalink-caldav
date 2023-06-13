@@ -143,10 +143,10 @@ module TimexDatalinkCaldav
         est_time = occurrence.start_time.in_time_zone(get_localzone)
         key = "#{est_time}_#{summary_words}"
         unless appointment_map[key]
-          puts "Adding appointment: #{summary_words} at time #{est_time}"
+          puts "Adding appointment: #{summary_words.join(' ')} at time #{est_time}"
           appointment = @protocol_class::Eeprom::Appointment.new(
             time: est_time,
-            message: summary_words
+            message: summary_words.join(' ')
           )
           appointments << appointment
           appointment_map[key] = true
@@ -159,10 +159,10 @@ module TimexDatalinkCaldav
         est_time = occurrence.start_time.in_time_zone(get_localzone)
         key = "#{est_time}_#{summary_words}"
         unless anniversary_map[key]
-          puts "Adding anniversary: #{summary_words} at date #{event.dtstart.to_s}"
+          puts "Adding anniversary: #{summary_words.join(' ')} at date #{event.dtstart.to_s}"
           anniversary = @protocol_class::Eeprom::Anniversary.new(
             time: event.dtstart.to_time,
-            anniversary: summary_words
+            anniversary: summary_words.join(' ')
           )
           anniversaries << anniversary
           anniversary_map[key] = true
