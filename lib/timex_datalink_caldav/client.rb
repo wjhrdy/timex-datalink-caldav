@@ -126,7 +126,7 @@ module TimexDatalinkCaldav
         est_time = occurrence.start_time.in_time_zone(get_localzone)
         key = "#{est_time}_#{summary_words.join(' ')}"
         unless anniversary_map[key]
-          puts "Adding anniversary event: #{summary_words.join(' ')} at date #{event.dtstart.to_s}"
+          puts "Adding anniversary event: #{summary_words.join(' ')} at date #{est_time}"
           event_phrase = phrase_builder.vocab_ids_for(*summary_words)
           anniversary = @protocol_class::Eeprom::Calendar::Event.new(
             time: Time.new(est_time.year, est_time.month, est_time.day, 9, 30, 0),
@@ -159,9 +159,9 @@ module TimexDatalinkCaldav
         est_time = occurrence.start_time.in_time_zone(get_localzone)
         key = "#{est_time}_#{summary_words}"
         unless anniversary_map[key]
-          puts "Adding anniversary: #{summary_words.join(' ')} at date #{event.dtstart.to_s}"
+          puts "Adding anniversary: #{summary_words.join(' ')} at date #{est_time}"
           anniversary = @protocol_class::Eeprom::Anniversary.new(
-            time: event.dtstart.to_time,
+            time: est_time,
             anniversary: summary_words.join(' ')
           )
           anniversaries << anniversary
