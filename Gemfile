@@ -9,7 +9,7 @@ gem "rake", "~> 13.0"
 
 gem "rspec", "~> 3.12"
 
-gem "timex_datalink_client", "~> 0.11.0"
+gem "timex_datalink_client", "~> 0.12.1"
 
 gem "calendav", "~> 0.4.0"
 

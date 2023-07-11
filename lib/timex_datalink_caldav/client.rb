@@ -20,7 +20,9 @@ module TimexDatalinkCaldav
                           when 1 then TimexDatalinkClient::Protocol1
                           when 3 then TimexDatalinkClient::Protocol3
                           when 4 then TimexDatalinkClient::Protocol4
+                          when 6 then TimexDatalinkClient::Protocol6
                           when 7 then TimexDatalinkClient::Protocol7
+                          when 9 then TimexDatalinkClient::Protocol9
                           else
                             raise ArgumentError, "Invalid protocol version: #{@protocol_version}"
                           end
@@ -176,7 +178,7 @@ module TimexDatalinkCaldav
       time1 = Time.now + 3
       time2 = time1.dup.utc
       
-      if @protocol_version == 1
+      if @protocol_version == 1 or @protocol_version == 9
         time_model = @protocol_class::Time.new(
           zone: 1,
           time: time1,
@@ -212,15 +214,40 @@ module TimexDatalinkCaldav
         )
         time_name_model = nil # Not needed for protocol version 3 and 4
         utc_time_name_model = nil # Not needed for protocol version 3 and 4
-
+      elsif @protocol_version == 6
+        time_model = @protocol_class::Time.new(
+          zone: 1,
+          time: time1,
+          is_24h: false,
+          date_format: "%_m-%d-%y"
+        )
+        utc_time_model = @protocol_class::Time.new(
+          zone: 2,
+          flex_time: true,
+          flex_time_zone: true,
+          is_24h: true,
+          date_format: "%_m-%d-%y"
+        )
+        time_name_model = nil # Not needed for protocol version 6
+        utc_time_name_model = nil # Not needed for protocol version 6
       else
         time_model = nil
         utc_time_model = nil
         time_name_model = nil
         utc_time_name_model = nil
       end
-      
-      if @protocol_version == 7
+
+      if @protocol_version == 6 or @protocol_version == 9
+        models = [
+          @protocol_class::Sync.new,
+          @protocol_class::Start.new,
+          time_model,
+          time_name_model,
+          utc_time_model,
+          utc_time_name_model,
+          @protocol_class::End.new
+        ].compact
+      elsif @protocol_version == 7
         calendar = @protocol_class::Eeprom::Calendar.new(
           time: time1,
           events: appointments

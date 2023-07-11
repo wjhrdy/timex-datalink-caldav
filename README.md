@@ -72,7 +72,7 @@ endpoints:
 
 The device is a serial device that flashes an led when it receives data. On Linux, this is usually `/dev/tty*`. On macOS, this is usually `$(ls /dev/tty.usbmodem* | head -n 1)`. On Windows, this is usually `COM1`.
 
-If you want to use this, I highly recommend pairing it with the Raspberry Pi Pico and [this project](https://github.com/famiclone6502/DIY_Datalink_Adapter). It is the cheapest and easiest way to get a serial device that works with the Timex Datalink watch.
+If you want to use this, I highly recommend pairing it with the Raspberry Pi Pico and [this project](https://github.com/famiclone6502/DIY_Datalink_Adapter) or [this one](https://github.com/synthead/timex-datalink-arduino). It is the cheapest and easiest way to get a serial device that works with the Timex Datalink watch.
 
 ## Notes
 
