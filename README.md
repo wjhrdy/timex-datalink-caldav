@@ -1,5 +1,8 @@
 # TimexDatalinkCaldav
 
+![signal-2023-06-22-120357](https://github.com/wjhrdy/timex-datalink-caldav/assets/1795778/85ad006c-6a61-4178-ad03-9c8674172619)
+
+
 TimexDatalinkCaldav is a simple Ruby gem designed to sync events from a CalDAV server or an ical formatted ics file to a Timex Datalink watch. It can also be used as a standalone command-line interface (CLI) tool.
 
 ## Pre-requisites
