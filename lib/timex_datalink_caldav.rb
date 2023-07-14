@@ -20,7 +20,7 @@ module TimexDatalinkCaldav
         all_anniversaries.concat(anniversaries) if anniversaries.any?
       end
     
-      if all_appointments.any? || all_anniversaries.any?
+      if all_appointments.any? || all_anniversaries.any? || @options[:api] == "6" or @options[:api] == "9"
         client = TimexDatalinkCaldav::Client.new(
           @options[:endpoints][0][:user],
           @options[:endpoints][0][:password],

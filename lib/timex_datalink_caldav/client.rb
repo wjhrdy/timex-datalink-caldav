@@ -80,6 +80,8 @@ module TimexDatalinkCaldav
           else
             add_appointment_event(appointment_map, appointments, phrase_builder, summary_words, occurrences)
           end
+        elsif @protocol_version == 9 or @protocol_version == 6
+          print "Protocol version #{@protocol_version} doesn't support events, skipping event: #{summary_words.join(' ')}\n"
         else
           if all_day_event?(event)
             add_anniversary(event, anniversary_map, anniversaries, summary_words, occurrences)
@@ -223,6 +225,7 @@ module TimexDatalinkCaldav
         )
         utc_time_model = @protocol_class::Time.new(
           zone: 2,
+          time: time2,
           flex_time: true,
           flex_time_zone: true,
           is_24h: true,
